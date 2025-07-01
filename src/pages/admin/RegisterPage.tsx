@@ -15,8 +15,8 @@ import { registerAdmin } from '../../services/api/adminApi';
 interface RegisterFormData {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 const RegisterPage: React.FC = () => {
@@ -24,8 +24,8 @@ const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState<RegisterFormData>({
     email: '',
     password: '',
-    firstName: '',
-    lastName: ''
+    first_name: '',
+    last_name: ''
   });
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ const RegisterPage: React.FC = () => {
     setLoading(true);
 
     try {
-      if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
+      if (!formData.email || !formData.password || !formData.first_name || !formData.last_name) {
         setError('All fields are required');
         return;
       }
@@ -53,8 +53,8 @@ const RegisterPage: React.FC = () => {
       const response = await registerAdmin({
         email: formData.email,
         password: formData.password,
-        firstName: formData.firstName,
-        lastName: formData.lastName
+        first_name: formData.first_name,
+        last_name: formData.last_name
       });
 
       if (response.status === 201) {
@@ -141,14 +141,14 @@ const RegisterPage: React.FC = () => {
               margin="normal"
               required
               fullWidth
-              id="firstName"
+              id="first_name"
               label="First Name"
-              name="firstName"
+              name="first_name"
               autoComplete="given-name"
-              value={formData.firstName}
+              value={formData.first_name}
               onChange={handleChange}
-              error={!!error && !formData.firstName}
-              helperText={!formData.firstName ? 'First name is required' : ''}
+              error={!!error && !formData.first_name}
+              helperText={!formData.first_name ? 'First name is required' : ''}
               InputProps={{
                 startAdornment: <Person sx={{ color: 'action.active', mr: 1 }} />
               }}
@@ -157,14 +157,14 @@ const RegisterPage: React.FC = () => {
               margin="normal"
               required
               fullWidth
-              id="lastName"
+              id="last_name"
               label="Last Name"
-              name="lastName"
+              name="last_name"
               autoComplete="family-name"
-              value={formData.lastName}
+              value={formData.last_name}
               onChange={handleChange}
-              error={!!error && !formData.lastName}
-              helperText={!formData.lastName ? 'Last name is required' : ''}
+              error={!!error && !formData.last_name}
+              helperText={!formData.last_name ? 'Last name is required' : ''}
               InputProps={{
                 startAdornment: <Person sx={{ color: 'action.active', mr: 1 }} />
               }}

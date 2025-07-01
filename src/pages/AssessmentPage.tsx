@@ -10,9 +10,9 @@ import { questions } from '../components/assessment/questions';
 
 // Define UserFormData type
 type UserFormData = {
-  firstName: string;
+  first_name: string;
   email: string;
-  ageRange: string;
+  age_range: string;
   region: string;
   role?: string;
 };
@@ -79,9 +79,9 @@ export const AssessmentPage = () => {
   // Handle user info submission
   const handleUserInfoSubmit = (userData: UserFormData) => {
     setUserInfo({
-      firstName: userData.firstName,
+      first_name: userData.first_name,
       email: userData.email,
-      ageRange: userData.ageRange,
+      age_range: userData.age_range,
       region: userData.region,
       role: userData.role
     });

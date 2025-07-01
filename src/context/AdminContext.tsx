@@ -5,8 +5,8 @@ import axios from 'axios';
 interface Admin {
   id: number;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 interface DashboardStats {
@@ -20,8 +20,8 @@ interface DashboardStats {
   };
   recentAssessments: Array<{
     User: {
-      firstName: string;
-      lastName: string;
+      first_name: string;
+      last_name: string;
       email: string;
     };
     Result: {

@@ -14,9 +14,9 @@ router.post('/register', async (req, res) => {
   
   try {
     // Validate request body
-    const { email, password, firstName, lastName } = req.body;
+    const { email, password, first_name, last_name } = req.body;
     
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !first_name || !last_name) {
       console.log('❌ Missing required fields');
       return res.status(400).json({
         status: 'error',
@@ -41,8 +41,8 @@ router.post('/register', async (req, res) => {
     const admin = await Admin.create({
       email,
       password,
-      firstName,
-      lastName
+      first_name,
+      last_name
     });
 
     console.log('✅ Admin created successfully');
@@ -65,8 +65,8 @@ router.post('/register', async (req, res) => {
         admin: {
           id: admin.id,
           email: admin.email,
-          firstName: admin.firstName,
-          lastName: admin.lastName
+          first_name: admin.first_name,
+          last_name: admin.last_name
         },
         token
       }
@@ -162,8 +162,8 @@ router.post('/login', async (req, res) => {
         admin: {
           id: admin.id,
           email: admin.email,
-          firstName: admin.firstName,
-          lastName: admin.lastName
+          first_name: admin.first_name,
+          last_name: admin.last_name
         },
         token
       }
@@ -230,7 +230,7 @@ router.get('/dashboard', authenticateAdmin, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['firstName', 'lastName', 'email']
+          attributes: ['first_name', 'last_name', 'email']
         },
         {
           model: Result,
@@ -289,7 +289,7 @@ router.get('/results', authenticateAdmin, async (req, res) => {
           include: [
             {
               model: User,
-              attributes: ['firstName', 'lastName', 'email', 'ageRange', 'region', 'role']
+              attributes: ['first_name', 'last_name', 'email', 'age_range', 'region', 'role']
             }
           ]
         }

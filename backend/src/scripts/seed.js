@@ -201,8 +201,8 @@ async function seed() {
     await Admin.create({
       email: process.env.ADMIN_EMAIL || 'admin@digiwise.com',
       password: hashedPassword,
-      firstName: 'Admin',
-      lastName: 'User'
+      first_name: 'Admin',
+      last_name: 'User'
     });
     console.log('Admin user created');
 

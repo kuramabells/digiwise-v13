@@ -8,22 +8,45 @@ async function testConnection() {
     const healthResponse = await axios.get('http://localhost:5001/health');
     console.log('Health check response:', healthResponse.data);
     
-    // Test admin registration endpoint
-    const testData = {
-      email: 'test@example.com',
+    // Test admin registration
+    const adminData = {
+      email: 'testadmin@example.com',
       password: 'password123',
-      firstName: 'Test',
-      lastName: 'User'
+      first_name: 'Test',
+      last_name: 'Admin'
     };
-    
-    console.log('\nSending test registration request...');
-    const registerResponse = await axios.post('http://localhost:5001/api/admins/register', testData, {
-      validateStatus: () => true // Don't throw on HTTP error status
+
+    console.log('\nSending admin registration request...');
+    const adminRegister = await axios.post('http://localhost:5001/api/admins/register', adminData, {
+      validateStatus: () => true
     });
-    
-    console.log('\nRegistration test response:');
-    console.log('Status:', registerResponse.status);
-    console.log('Data:', registerResponse.data);
+    console.log('Admin registration status:', adminRegister.status);
+
+    console.log('Testing admin login...');
+    const adminLogin = await axios.post('http://localhost:5001/api/admins/login', {
+      email: adminData.email,
+      password: adminData.password
+    });
+    console.log('Admin login response:', adminLogin.data);
+
+    // Test user registration and login
+    const userData = {
+      email: 'snake_user@example.com',
+      password: 'password123',
+      first_name: 'Snake',
+      last_name: 'Case',
+      age_range: '18-25',
+      region: 'Region I'
+    };
+    console.log('\nSending user registration request...');
+    await axios.post('http://localhost:5001/api/auth/register', userData);
+
+    console.log('Testing user login...');
+    const userLogin = await axios.post('http://localhost:5001/api/auth/login', {
+      email: userData.email,
+      password: userData.password
+    });
+    console.log('User login response:', userLogin.data);
     
   } catch (error) {
     console.error('\n=== Test Failed ===');

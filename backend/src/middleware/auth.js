@@ -54,7 +54,7 @@ const authenticateUser = async (req, res, next) => {
       // Get user from database with specific attributes
       const user = await User.findOne({
         where: { id: decoded.id },
-        attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'lastLogin']
+        attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'last_login']
       });
 
       console.log('Found user:', user ? `ID: ${user.id}, Email: ${user.email}` : 'Not found');

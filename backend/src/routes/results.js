@@ -15,7 +15,7 @@ router.get('/my-results', authenticateUser, async (req, res) => {
           include: [
             {
               model: User,
-              attributes: ['firstName', 'lastName', 'email', 'ageRange', 'region', 'role']
+              attributes: ['first_name', 'last_name', 'email', 'age_range', 'region', 'role']
             }
           ]
         }
@@ -49,7 +49,7 @@ router.get('/:assessmentId', authenticateUser, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['firstName', 'lastName', 'email', 'ageRange', 'region', 'role']
+          attributes: ['first_name', 'last_name', 'email', 'age_range', 'region', 'role']
         },
         {
           model: Result

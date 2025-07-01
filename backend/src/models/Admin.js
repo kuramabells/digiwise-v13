@@ -20,23 +20,27 @@ const Admin = sequelize.define('Admin', {
     type: DataTypes.STRING(255),
     allowNull: false
   },
-  firstName: {
+  first_name: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: false,
+    field: 'first_name'
   },
-  lastName: {
+  last_name: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: false,
+    field: 'last_name'
   },
-  createdAt: {
+  created_at: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: DataTypes.NOW
+    defaultValue: DataTypes.NOW,
+    field: 'created_at'
   },
-  updatedAt: {
+  updated_at: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: DataTypes.NOW
+    defaultValue: DataTypes.NOW,
+    field: 'updated_at'
   }
 }, {
   tableName: 'admins',

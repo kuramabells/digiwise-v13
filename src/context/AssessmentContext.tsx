@@ -8,9 +8,9 @@ export type Answer = {
   value: number;
 };
 export type UserInfo = {
-  firstName: string;
+  first_name: string;
   email: string;
-  ageRange: string;
+  age_range: string;
   region: string;
   role: string;
 };

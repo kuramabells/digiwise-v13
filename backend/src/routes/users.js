@@ -5,6 +5,19 @@ const { User } = require('../models');
 const router = express.Router();
 const { authenticateUser } = require('../middleware/auth');
 
+// Get all users
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'first_name', 'last_name', 'email']
+    });
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch users' });
+  }
+});
+
 // Use the same secret key as auth middleware
 const JWT_SECRET = 'digiwise_super_secret_key_2025_secure_123';
 
@@ -27,7 +40,7 @@ router.post('/login', async (req, res) => {
       where: {
         email: email.toLowerCase()
       },
-      attributes: ['id', 'firstName', 'lastName', 'email', 'password', 'role']
+      attributes: ['id', 'first_name', 'last_name', 'email', 'password', 'role']
     });
 
     if (!user) {
@@ -96,7 +109,7 @@ router.post('/login', async (req, res) => {
 
     // Update last login
     try {
-      await user.update({ lastLogin: new Date() });
+      await user.update({ last_login: new Date() });
     } catch (error) {
       console.error('Error updating last login:', error);
     }
@@ -104,8 +117,8 @@ router.post('/login', async (req, res) => {
     // Remove password from user object
     const userResponse = {
       id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       role: user.role
     };
@@ -131,7 +144,7 @@ router.post('/login', async (req, res) => {
 router.get('/me', authenticateUser, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'firstName', 'lastName', 'email', 'role']
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role']
     });
 
     if (!user) {
