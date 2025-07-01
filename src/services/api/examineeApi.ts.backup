@@ -1,0 +1,306 @@
+import axios, { AxiosError } from 'axios';
+
+// Use environment variable if available, otherwise use the production server URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api';
+
+// Configure axios instance with retry logic and proper JSON handling
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000, // 10 second timeout
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  transformRequest: [
+    (data) => {
+      if (data) {
+        const jsonData = JSON.stringify(data);
+        console.log('Sending request with data:', jsonData);
+        return jsonData;
+      }
+      return data;
+    }
+  ]
+});
+
+// Add retry interceptor
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (!error.config) {
+      return Promise.reject(error);
+    }
+    
+    const originalRequest = error.config;
+    
+    // If error is 429 (Too Many Requests) and we haven't retried yet
+    if (error.response?.status === 429 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
+      // Wait for 2 seconds before retrying
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Retry the request
+      return axiosInstance(originalRequest);
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
+export interface UserFormData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+  age_range: string;
+  region: string;
+  role?: string;
+}
+
+export interface Answer {
+  questionId: number;
+  value: number;
+}
+
+export interface AssessmentResult {
+  examinationId: number;
+  overallScore: number;
+  categoryScores: Record<string, number>;
+  riskLevel: string;
+}
+
+export const examineeApi = {
+  // Register a new examinee
+  register: async (userData: Omit<UserFormData, 'confirmPassword'>) => {
+  try {
+    // Use camelCase to match database column names
+    const payload = {
+      firstName: userData.first_name,
+      lastName: userData.last_name,
+      email: userData.email,
+      password: userData.password,
+      ageRange: userData.age_range,
+      region: userData.region,
+      role: userData.role || 'examinee'
+    };
+    
+    console.log('=== REGISTRATION ATTEMPT ===');
+    console.log('Payload being sent:', JSON.stringify(payload, null, 2));
+    console.log('Full URL:', `${API_BASE_URL}/auth/register`);
+    
+    const response = await axiosInstance.post('/auth/register', payload);
+    
+    console.log('Registration successful:', response.data);
+    return response.data;
+    
+  } catch (error: unknown) {
+    console.error('=== REGISTRATION ERROR ===');
+    
+    if (typeof error === 'object' && error !== null) {
+      const axiosError = error as any;
+      
+      // Log everything about the error
+      console.error('Error object:', axiosError);
+      console.error('Error message:', axiosError.message);
+      console.error('Error code:', axiosError.code);
+      
+      if (axiosError.response) {
+        console.error('Response status:', axiosError.response.status);
+        console.error('Response statusText:', axiosError.response.statusText);
+        console.error('Response headers:', axiosError.response.headers);
+        console.error('Response data:', axiosError.response.data);
+        console.error('Full response:', axiosError.response);
+      } else if (axiosError.request) {
+        console.error('Request made but no response:', axiosError.request);
+      } else {
+        console.error('Error in request setup:', axiosError.message);
+      }
+      
+      // Handle specific error cases
+      if (axiosError.response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      
+      if (axiosError.response?.status === 400) {
+        const errorData = axiosError.response.data;
+        console.error('400 Bad Request details:', errorData);
+        
+        // Try to extract meaningful error message
+        let errorMessage = 'Invalid registration data';
+        
+        if (errorData?.message) {
+          errorMessage = Array.isArray(errorData.message) 
+            ? errorData.message.join(', ') 
+            : errorData.message;
+        } else if (errorData?.error) {
+          errorMessage = errorData.error;
+        } else if (errorData?.errors) {
+          errorMessage = Array.isArray(errorData.errors)
+            ? errorData.errors.join(', ')
+            : JSON.stringify(errorData.errors);
+        }
+        
+        throw new Error(errorMessage);
+      }
+      
+      if (axiosError.response?.status === 404) {
+        throw new Error('Registration endpoint not found. Please check the API URL.');
+      }
+      
+      if (axiosError.response?.status >= 500) {
+        throw new Error('Server error. Please try again later.');
+      }
+      
+      // Use the error message from the backend if available
+      if (axiosError.response?.data?.message) {
+        throw new Error(axiosError.response.data.message);
+      }
+      
+      // Handle network errors
+      if (axiosError.message === 'Network Error') {
+        throw new Error('Unable to connect to the server. Please check your internet connection.');
+      }
+      
+      // Handle timeout
+      if (axiosError.code === 'ECONNABORTED') {
+        throw new Error('Request timed out. Please try again.');
+      }
+    }
+    
+    // If we don't have a specific error to show, throw a generic one
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('An unknown error occurred during registration');
+  },
+
+  // Alternative version using /examinees/register endpoint
+  registerAlternative: async (userData: Omit<UserFormData, 'confirmPassword'>) => {
+    try {
+      const payload = {
+        firstName: userData.first_name,
+        lastName: userData.last_name,
+        email: userData.email,
+        password: userData.password,
+        ageRange: userData.age_range,
+        region: userData.region,
+        role: userData.role || 'examinee'
+      };
+      
+      console.log('Trying alternative endpoint: /examinees/register');
+      console.log('Payload:', JSON.stringify(payload, null, 2));
+      
+      const response = await axiosInstance.post('/examinees/register', payload);
+      return response.data;
+      
+    } catch (error: unknown) {
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Login an examinee
+  login: async (email: string, password: string) => {
+    try {
+      const response = await axiosInstance.post('/examinees/login', { email, password });
+      return response.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'response' in error && (error as any).response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Save examinee information
+  saveInfo: async (data: UserFormData & { examination_id: number }) => {
+    try {
+      const response = await axiosInstance.post('/examinees/info', data);
+      return response.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'response' in error && (error as any).response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Start a new examination
+  startExamination: async (userId: number) => {
+    try {
+      const response = await axiosInstance.post('/examinations/start', { userId });
+      return response.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'response' in error && (error as any).response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Submit answers for an examination
+  submitAnswers: async (examinationId: number, answers: Answer[]) => {
+    try {
+      const response = await axiosInstance.post(`/examinations/${examinationId}/answers`, { answers });
+      return response.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'response' in error && (error as any).response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Complete an examination
+  completeExamination: async (examinationId: number) => {
+    try {
+      const response = await axiosInstance.post(`/examinations/${examinationId}/complete`);
+      return response.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'response' in error && (error as any).response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Get examination results
+  getResults: async (examinationId: number) => {
+    try {
+      const response = await axiosInstance.get(`/examinations/${examinationId}/results`);
+      return response.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'response' in error && (error as any).response?.status === 429) {
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('Unknown error occurred.');
+    }
+  },
+
+  // Get user's examination history
+  getExaminationHistory: async (userId: number) => {
+    try {
+      const response = await axiosInstance.get(`/examinees/${userId}/examinations`);
+      return response.data;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 429) {
+          throw new Error('Too many requests. Please wait a moment and try again.');
+        }
+        if (error.response?.data?.message) {
+          throw new Error(error.response.data.message);
+        }
+      }
+      if (error instanceof Error) throw error;
+      throw new Error('An unknown error occurred while fetching examination history.');
+    }
+  }
+} as const;
