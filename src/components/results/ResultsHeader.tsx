@@ -6,13 +6,13 @@ interface ResultsHeaderProps {
   score: number;
   riskLevel: string;
   completionDate: Date;
-  firstName?: string;
+  first_name?: string;
 }
 export const ResultsHeader = ({
   score,
   riskLevel,
   completionDate,
-  firstName
+  first_name
 }: ResultsHeaderProps) => {
   const {
     state
@@ -99,7 +99,7 @@ export const ResultsHeader = ({
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-800 mb-1">
-                {firstName ? `${firstName}'s Assessment Results` : 'Your Assessment Results'}
+                {first_name ? `${first_name}'s Assessment Results` : 'Your Assessment Results'}
               </h1>
               <div className="flex items-center text-gray-500 mb-4">
                 <CalendarIcon size={16} className="mr-1" aria-hidden="true" />

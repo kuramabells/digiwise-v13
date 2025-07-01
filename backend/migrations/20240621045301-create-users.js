@@ -42,28 +42,12 @@ module.exports = {
         allowNull: false,
         defaultValue: 'examinee',
       },
-      firstName: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-      },
-      lastName: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-      },
-      ageRange: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-      },
-      lastLogin: {
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),

@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      firstName: {
+      first_name: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      lastName: {
+      last_name: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -29,19 +29,19 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true
       },
-      ageRange: {
+      age_range: {
         type: DataTypes.STRING,
         allowNull: true
       },
-      lastLogin: {
+      last_login: {
         type: DataTypes.DATE,
         allowNull: true
       },
-      createdAt: {
+      created_at: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      updatedAt: {
+      updated_at: {
         type: DataTypes.DATE,
         allowNull: false
       }

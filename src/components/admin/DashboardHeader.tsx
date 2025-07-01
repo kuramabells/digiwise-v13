@@ -19,7 +19,7 @@ export const DashboardHeader: React.FC = () => {
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Typography variant="body1">
-            Welcome, {state?.admin?.firstName} {state?.admin?.lastName}
+            Welcome, {state?.admin?.first_name} {state?.admin?.last_name}
           </Typography>
           <Button 
             variant="outlined" 

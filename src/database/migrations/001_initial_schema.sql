@@ -35,17 +35,17 @@ CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `email`, `password`, `firstName`, `lastName`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `admins` (`id`, `email`, `password`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
 (0, 'admin@digiwise.com', '$2a$10$bga/GMe7Cjz997dUarsIEe1sPWrAOoOomR4zdH8Du6.dnzkj3NSwu', 'Admin', 'User', '2025-06-12 16:15:05', '2025-06-12 16:15:05');
 
 -- --------------------------------------------------------
@@ -180,27 +180,24 @@ CREATE TABLE `users` (
   `last_name` varchar(255) NOT NULL,
   `age_range` varchar(255) DEFAULT NULL,
   `role` varchar(255) NOT NULL DEFAULT 'examinee',
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `ageRange` varchar(255) NOT NULL,
-  `lastLogin` datetime DEFAULT NULL
+  `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `region`, `last_login`, `first_name`, `last_name`, `age_range`, `role`, `firstName`, `lastName`, `ageRange`, `lastLogin`) VALUES
-(1, 'sample@sample.com', 'sample123', 'region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(3, 'sample@GMAIL.com', 'sample123', 'region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(4, 'yhell@techpro360solutions.com', '$2a$10$CAApap0693/WAKkYnvGd.OO/CLdZvbDdgZNJucLenjfs8sjP132hy', 'Region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(5, 'roma@techpro360solutions.com', '$2a$10$STQPUCTwBLpDfJ.f07txI.omj7by1GBCqWjqmMahQQz02YT5Ebs1e', 'Region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(6, 'sample@okay.com', '$2a$10$IPZrES5u3xgONWrlGVw/vONsZbLP.QXG18.kn0x2lx7tyDtR9Or12', 'Region IV-A', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(7, 'sample@yeah.com', '$2a$10$poRaSQB.CxtOZhcFBBsVve2UdJzM3VybuvjwoFO77RWLaybJqrEVq', 'Region II', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(8, 'sample@vriella.com', '$2a$10$12frUlyGhN4d5trRkDhBpOAaltd1cdn3T67agiySiZSM6lpOM3qu6', 'Region II', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(9, 'sample@yes.com', '$2a$10$Ekhn19eb4T36oj7JTRNn9u0jhL8V.CcrB8nBTiwKsIcT9fyhHhYLq', 'Region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(10, 'isda@fish.com', '$2a$10$wKkn4NMpgg5Jcuxgxy5oUOP4ga1.h.6uOQO/Llz8nqbSJ0EnnwbJ.', 'Region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL),
-(11, 'isda@fisher.com', '$2a$10$nb00htjG0q9I4s2nQWl0duqpBPI6Wq39AuP17Yb6kzDLEkKzaAZsO', 'Region III', NULL, '', '', NULL, 'examinee', '', '', '', NULL);
+INSERT INTO `users` (`id`, `email`, `password`, `region`, `last_login`, `first_name`, `last_name`, `age_range`, `role`) VALUES
+(1, 'sample@sample.com', 'sample123', 'region III', NULL, '', '', NULL, 'examinee'),
+(3, 'sample@GMAIL.com', 'sample123', 'region III', NULL, '', '', NULL, 'examinee'),
+(4, 'yhell@techpro360solutions.com', '$2a$10$CAApap0693/WAKkYnvGd.OO/CLdZvbDdgZNJucLenjfs8sjP132hy', 'Region III', NULL, '', '', NULL, 'examinee'),
+(5, 'roma@techpro360solutions.com', '$2a$10$STQPUCTwBLpDfJ.f07txI.omj7by1GBCqWjqmMahQQz02YT5Ebs1e', 'Region III', NULL, '', '', NULL, 'examinee'),
+(6, 'sample@okay.com', '$2a$10$IPZrES5u3xgONWrlGVw/vONsZbLP.QXG18.kn0x2lx7tyDtR9Or12', 'Region IV-A', NULL, '', '', NULL, 'examinee'),
+(7, 'sample@yeah.com', '$2a$10$poRaSQB.CxtOZhcFBBsVve2UdJzM3VybuvjwoFO77RWLaybJqrEVq', 'Region II', NULL, '', '', NULL, 'examinee'),
+(8, 'sample@vriella.com', '$2a$10$12frUlyGhN4d5trRkDhBpOAaltd1cdn3T67agiySiZSM6lpOM3qu6', 'Region II', NULL, '', '', NULL, 'examinee'),
+(9, 'sample@yes.com', '$2a$10$Ekhn19eb4T36oj7JTRNn9u0jhL8V.CcrB8nBTiwKsIcT9fyhHhYLq', 'Region III', NULL, '', '', NULL, 'examinee'),
+(10, 'isda@fish.com', '$2a$10$wKkn4NMpgg5Jcuxgxy5oUOP4ga1.h.6uOQO/Llz8nqbSJ0EnnwbJ.', 'Region III', NULL, '', '', NULL, 'examinee'),
+(11, 'isda@fisher.com', '$2a$10$nb00htjG0q9I4s2nQWl0duqpBPI6Wq39AuP17Yb6kzDLEkKzaAZsO', 'Region III', NULL, '', '', NULL, 'examinee');
 
 --
 -- Indexes for dumped tables

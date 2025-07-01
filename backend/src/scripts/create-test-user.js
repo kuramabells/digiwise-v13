@@ -14,12 +14,12 @@ const createTestUser = async () => {
     // Create test user
     const hashedPassword = await bcrypt.hash('password123', 10);
     const user = await User.create({
-      firstName: 'Test',
-      lastName: 'User',
+      first_name: 'Test',
+      last_name: 'User',
       email: 'test@example.com',
       password: hashedPassword,
       region: 'North America',
-      ageRange: '25-34'
+      age_range: '25-34'
     });
 
     console.log('Test user created successfully:', user.email);

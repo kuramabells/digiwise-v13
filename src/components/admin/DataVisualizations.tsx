@@ -10,8 +10,8 @@ interface DataVisualizationsProps {
   };
   recentAssessments: Array<{
     User: {
-      firstName: string;
-      lastName: string;
+      first_name: string;
+      last_name: string;
       email: string;
     };
     Result: {
@@ -98,7 +98,7 @@ export const DataVisualizations: React.FC<DataVisualizationsProps> = ({
                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
                     <Typography variant="subtitle1">
-                      {assessment.User?.firstName} {assessment.User?.lastName}
+                      {assessment.User?.first_name} {assessment.User?.last_name}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       {assessment.User?.email}

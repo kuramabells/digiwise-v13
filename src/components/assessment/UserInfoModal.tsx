@@ -9,10 +9,10 @@ interface UserInfoModalProps {
 
 export const UserInfoModal: React.FC<UserInfoModalProps> = ({ onClose, onSubmit }) => {
   const [formData, setFormData] = useState<UserInfo>({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
-    ageRange: '',
+    age_range: '',
     region: '',
     role: ''
   });
@@ -46,30 +46,30 @@ export const UserInfoModal: React.FC<UserInfoModalProps> = ({ onClose, onSubmit 
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
                 First Name
               </label>
               <input
                 type="text"
-                id="firstName"
-                name="firstName"
+                id="first_name"
+                name="first_name"
                 required
-                value={formData.firstName}
+                value={formData.first_name}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
                 Last Name
               </label>
               <input
                 type="text"
-                id="lastName"
-                name="lastName"
+                id="last_name"
+                name="last_name"
                 required
-                value={formData.lastName}
+                value={formData.last_name}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />

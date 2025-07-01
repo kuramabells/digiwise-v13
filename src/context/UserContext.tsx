@@ -5,15 +5,13 @@ import { examineeApi } from '../services/api/examineeApi';
 
 interface User {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  ageRange?: string;
-  age_range?: string; // Backend might return this
+  age_range?: string;
   region?: string;
   role: string;
-  first_name?: string; // Backend might return this
-  last_name?: string;  // Backend might return this
+  last_login?: string | null;
 }
 
 interface UserState {
@@ -152,10 +150,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       // Map the response data to our User interface
       const userData: User = {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
-        role: user.role || 'user'
+        role: user.role || 'user',
+        age_range: user.age_range,
+        region: user.region,
+        last_login: user.last_login
       };
 
       // Update the state with the user data
@@ -210,13 +211,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       
       // Prepare the registration data with snake_case field names
       const registrationData = {
-        first_name: userData.first_name || userData.firstName || '',
-        last_name: userData.last_name || userData.lastName || '',
+        first_name: userData.first_name || '',
+        last_name: userData.last_name || '',
         email: userData.email || '',
         password: userData.password,
-        age_range: userData.age_range || userData.ageRange || '',
+        age_range: userData.age_range || '',
         region: userData.region || '',
-        role: userData.role || 'examinee' // Default role if not provided
+        role: userData.role || 'examinee'
       };
       
       // Validate required fields
@@ -249,17 +250,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       // Map the response data to our User interface
       const newUser: User = {
         id: user.id,
-        // Map both camelCase and snake_case from response
-        firstName: user.firstName || user.first_name || '',
-        lastName: user.lastName || user.last_name || '',
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
-        ageRange: user.ageRange || user.age_range,
+        age_range: user.age_range,
         region: user.region,
         role: user.role || 'examinee',
-        // Keep snake_case for form compatibility
-        first_name: user.firstName || user.first_name || '',
-        last_name: user.lastName || user.last_name || '',
-        age_range: user.ageRange || user.age_range
+        last_login: user.last_login
       };
       
       console.log('Mapped user data with camelCase:', newUser);

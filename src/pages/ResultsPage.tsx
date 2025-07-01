@@ -88,8 +88,8 @@ export const ResultsPage = () => {
   const handleDownload = () => {
     // Create a new PDF document
     const doc = new jsPDF();
-    const firstName = _userState.user?.firstName || '';
-    const lastName = _userState.user?.lastName || '';
+    const firstName = _userState.user?.first_name || '';
+    const lastName = _userState.user?.last_name || '';
     const userName = `${firstName} ${lastName}`.trim() || 'User';
     const completionDate = state.completionTime ? state.completionTime.toLocaleDateString() : new Date().toLocaleDateString();
     const riskLevel = results.riskLevel.charAt(0).toUpperCase() + results.riskLevel.slice(1);
@@ -345,7 +345,7 @@ export const ResultsPage = () => {
     }} transition={{
       duration: 0.4
     }}>
-        <ResultsHeader score={results.overallScore} riskLevel={results.riskLevel} completionDate={state.completionTime || new Date()} firstName={state.userInfo?.firstName} />
+        <ResultsHeader score={results.overallScore} riskLevel={results.riskLevel} completionDate={state.completionTime || new Date()} first_name={state.userInfo?.first_name} />
         <div className="space-y-6 mt-8">
           <motion.div initial={{
           opacity: 0,

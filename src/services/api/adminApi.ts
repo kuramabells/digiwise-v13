@@ -5,8 +5,8 @@ const API_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 interface RegisterAdminData {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 // Configure axios instance with retry logic

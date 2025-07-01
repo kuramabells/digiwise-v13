@@ -4,8 +4,8 @@ import axios from 'axios';
 interface Admin {
   id: number;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 interface AdminContextType {

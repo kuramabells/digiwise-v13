@@ -48,8 +48,8 @@ const AdminLogin = () => {
   const [registerData, setRegisterData] = useState({
     email: '',
     password: '',
-    firstName: '',
-    lastName: ''
+    first_name: '',
+    last_name: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -215,22 +215,22 @@ const AdminLogin = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
-                name="firstName"
+                name="first_name"
                 autoComplete="given-name"
-                value={registerData.firstName}
+                value={registerData.first_name}
                 onChange={handleRegisterChange}
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 autoComplete="family-name"
-                value={registerData.lastName}
+                value={registerData.last_name}
                 onChange={handleRegisterChange}
               />
               <TextField

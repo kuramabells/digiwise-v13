@@ -73,10 +73,10 @@ async function setupDatabase() {
         id INT(11) NOT NULL AUTO_INCREMENT,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
-        firstName VARCHAR(255) NOT NULL,
-        lastName VARCHAR(255) NOT NULL,
-        createdAt DATETIME NOT NULL,
-        updatedAt DATETIME NOT NULL,
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
+        created_at DATETIME NOT NULL,
+        updated_at DATETIME NOT NULL,
         PRIMARY KEY (id),
         UNIQUE KEY email (email)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
@@ -90,7 +90,7 @@ async function setupDatabase() {
       // Create default admin
       const hashedPassword = await bcrypt.hash('admin123', 10);
       await connection.query(
-        'INSERT INTO admins (email, password, firstName, lastName, createdAt, updatedAt) VALUES (?, ?, ?, ?, NOW(), NOW())',
+        'INSERT INTO admins (email, password, first_name, last_name, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
         ['admin@digiwise.com', hashedPassword, 'Admin', 'User']
       );
       console.log('✅ Default admin created');
