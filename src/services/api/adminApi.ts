@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 interface RegisterAdminData {
   email: string;

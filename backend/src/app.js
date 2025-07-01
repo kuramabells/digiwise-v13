@@ -31,12 +31,6 @@ const createApp = () => {
   // Debug: Log the type of app to verify it's an Express app
   console.log('App type:', typeof app);
   console.log('Has listen method:', typeof app.listen === 'function');
-  
-  return app;
-};
-
-// Create the app
-const app = createApp();
 
 // Request logging middleware
 app.use((req, res, next) => {
@@ -140,6 +134,10 @@ app.use((req, res) => {
     message: 'Route not found'
   });
 });
+
+  return app;
+};
+
 
 // Export the createApp function instead of the app instance
 module.exports = createApp; 

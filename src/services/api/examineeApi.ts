@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use environment variable if available, otherwise use the production server URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 // Configure axios instance with retry logic and proper JSON handling
 const axiosInstance = axios.create({

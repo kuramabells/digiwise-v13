@@ -81,7 +81,7 @@ const AdminLogin = () => {
     try {
       console.log('Attempting admin login with:', { email: loginData.email });
       
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api'}/admin/login`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -112,7 +112,7 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api'}/admins/register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/admins/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

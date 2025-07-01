@@ -36,7 +36,7 @@ export const AdminProvider: React.FC<AdminProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api'}/admins/login`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL || 'api'}/admins/login`, {
         email,
         password
       });

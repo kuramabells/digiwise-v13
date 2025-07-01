@@ -4,16 +4,16 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    'process.env': {}
-  },
+  // define: {
+  //   'process.env': {}
+  // },
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(__dirname, 'src') },
       { find: 'crypto', replacement: 'crypto-browserify' },
       { find: 'stream', replacement: 'stream-browserify' },
       { find: 'util', replacement: 'util' },
-      { find: 'process', replacement: 'process/browser' },
+      // { find: 'process', replacement: 'process/browser' },
       { find: 'buffer', replacement: 'buffer' },
       { find: 'http', replacement: 'stream-http' },
       { find: 'https', replacement: 'https-browserify' },
@@ -65,6 +65,7 @@ export default defineConfig({
     sourcemap: false,
     assetsInlineLimit: 4096,
     cssCodeSplit: true,
+/*
     rollupOptions: {
       output: {
         entryFileNames: 'assets/[name].[hash].js',
@@ -84,8 +85,8 @@ export default defineConfig({
           return undefined;
         }
       }
-    }
-  },
+    } */
+  }, 
   optimizeDeps: {
     esbuildOptions: {
       target: 'es2020',

@@ -63,7 +63,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       }
 
       try {
-        const response = await axios.get<{ user: User }>(`${import.meta.env.VITE_API_BASE_URL || 'http://69.62.74.112:5001/api'}/users/me`, {
+        const response = await axios.get<{ user: User }>(`${import.meta.env.VITE_API_BASE_URL || '/api'}/users/me`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
